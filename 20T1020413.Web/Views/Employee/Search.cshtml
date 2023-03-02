@@ -1,0 +1,107 @@
+﻿@model _20T1020413.Web.Models.EmployeeSearchOuput
+
+@{
+    Layout = null;
+}
+<p style="margin-left: 5px; margin-top: 10px;">Có <strong>@string.Format("{0:N0}", Model.RowCount)</strong> bản ghi trong tổng số <strong>@string.Format("{0:N0}", Model.PageSize)</strong> trang</p>
+@*<table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Họ đệm</th>
+                <th>Tên</th>
+                <th>Ngày sinh</th>
+                <th>Ảnh</th>
+                <th>Email</th>
+                <th>Mật khẩu</th>
+                <th>Ghi chú</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <tr>
+                    <td>Châu Anh</td>
+                    <td>Kiệt</td>
+                    <td>6/11/2002</td>
+                    <td><img src="https://bom.so/p6XruL" alt="Anh Kiệt" style="width:100px;"></td>
+                    <td>anhkiet1234@gmail.com</td>
+                    <td>1234</td>
+                    <td></td>
+                    <td class="text-right">
+                        <a href="~/Employee/Edit" class="btn btn-success">
+                            <i class="glyphicon glyphicon-edit" title="Sửa"></i>
+                        </a>
+                        <a href="~/Employee/Delete" class="btn btn-danger">
+                            <i class="glyphicon glyphicon-trash" title="Xóa"></i>
+                        </a>
+                    </td>
+                </tr>
+             }
+        </tbody>
+    </table>*@
+<div class="row">
+    @foreach (var item in Model.Data)
+    {
+        <div class="col-md-5">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header" style="background-color: #3c8dbc;color:white;">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="~/Photo/@item.Photo" alt="Employee Avatar" style="height:65px;">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <p class="widget-user-username" style="line-height:45px;">@item.LastName @item.FirstName</p>
+                    @*<h3 class="widget-user-desc">Kiệt</h3>*@
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><p class="form-control-static" style="font-size:15px;margin-left:20px;">Ngày sinh: <span class="pull-right" style="margin-right: 10px;">@item.BirthDate</span></p></li>
+                        <li><p class="form-control-static" style="font-size:15px;margin-left:20px;">Email: <span class="pull-right" style="margin-right: 10px;">@item.Email</span></p></li>
+                        @*<li><p class="form-control-static" style="font-size:15px;margin-left:20px;">Mật khẩu <span class="pull-right" style="margin-right: 10px;">123</span></p></li>*@
+                        <li style="height:200px;">
+                            <p class="form-control-static" style="font-size:15px;margin-left:20px;">
+                                <b>
+                                    <u>
+                                        Ghi chú:
+                                    </u>
+                                </b>
+                                <br />
+                                <span>
+                                    @item.Notes
+                                </span>
+                            </p>
+                        </li>
+                        <li>
+                            <div style="margin-top: 5px;margin-bottom:15px;float:right;">
+                                <a href="~/Employee/Edit/@item.EmployeeID" class="btn btn-success">
+                                    <i class="glyphicon glyphicon-edit" title="Sửa"></i>
+                                </a>
+                                <a href="~/Employee/Delete/@item.EmployeeID" class="btn btn-danger">
+                                    <i class="glyphicon glyphicon-trash" title="Xóa"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+    }
+</div>
+<div class="text-center">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i == Model.Page)
+            {
+                <li class="active"><a href="#">@i</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="doSearch(@i)">@i</a></li>
+            }
+        }
+    </ul>
+</div>
