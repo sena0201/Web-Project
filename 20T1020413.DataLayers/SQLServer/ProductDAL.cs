@@ -124,7 +124,11 @@ namespace _20T1020413.DataLayers.SQLServer
             using (SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"DELETE FROM Products 
+                cmd.CommandText = @"DELETE FROM ProductAttributes
+                                    WHERE ProductID = @ProductID
+                                    DELETE FROM ProductPhotos
+                                    WHERE ProductID = @ProductID
+                                    DELETE FROM Products 
                                     WHERE ProductID = @ProductID AND NOT EXISTS(SELECT * FROM OrderDetails WHERE ProductID = @ProductID)";
                 //cmd.CommandText = @"DELETE FROM ProductAttributes
                 //                WHERE ProductID = @ProductID";
@@ -309,7 +313,7 @@ namespace _20T1020413.DataLayers.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT CASE 
-                                                WHEN EXISTS(SELECT * FROM Products WHERE ProductID = @ProductID) THEN 1 
+                                                WHEN EXISTS(SELECT * FROM OrderDetails WHERE ProductID = @ProductID) THEN 1 
                                                 ELSE 0 
                                             END";
                 cmd.CommandType = CommandType.Text;

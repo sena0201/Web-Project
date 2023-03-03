@@ -58,27 +58,24 @@ namespace _20T1020411.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(string userName = "" , string oldPassword = "", string newPassword = "")
         {
-            if (Request.HttpMethod == "GET")
-            {
-                return View();
-            }
+            ViewBag.UerName = userName;
             if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
             {
                 ModelState.AddModelError("", "Vui lòng nhập đủ thông tin");
                 return View();
             }
-            var userAccount = UserAccountService.Authorize(AccountTypes.Employee, userName, oldPassword);
-            if (userAccount == null)
+            var check = UserAccountService.ChangePassword(AccountTypes.Employee, userName, oldPassword, newPassword);
+            if (check == false)
             {
                 ModelState.AddModelError("", "Thông tin không chính xác");
                 return View();
             }
-
-            UserAccountService.ChangePassword(AccountTypes.Employee, userName, oldPassword, newPassword);
-            return RedirectToAction("Index", "Home");
+            Response.Write("<script>alert('Đổi mật khẩu thành công! Quay trở lại đăng nhập')</script>");
+            Session.Clear();
+            FormsAuthentication.SignOut();
+            return View("Login");
         }
 
         [HttpPost]

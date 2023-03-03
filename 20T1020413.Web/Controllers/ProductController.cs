@@ -106,7 +106,11 @@ namespace _20T1020413.Web.Controllers
         {
             //try
             //{
-            decimal priceDecimal = Convert.ToDecimal(price);
+            decimal? d = Converter.StringToDecimal(price);
+            if (d == null)
+                ModelState.AddModelError("Price", "Giá không hợp lệ");
+            else
+                data.Price = d.Value;
 
             if (string.IsNullOrWhiteSpace(data.ProductName))
                 ModelState.AddModelError("ProductName", "Tên mặt hàng không được để trống");
@@ -116,12 +120,9 @@ namespace _20T1020413.Web.Controllers
                 ModelState.AddModelError("CategoryID", "Vui lòng chọn loại hàng");
             if (string.IsNullOrWhiteSpace(data.Unit))
                 ModelState.AddModelError("Unit", "Đơn vị tính không được để trống");
-            if (priceDecimal == 0)
+            if (data.Price == 0)
                 ModelState.AddModelError("Price", "Vui lòng nhập giá");
-            else
-            {
-                data.Price = priceDecimal;
-            }
+
             if (string.IsNullOrWhiteSpace(data.Photo))
             {
                 data.Photo = "";
@@ -174,8 +175,15 @@ namespace _20T1020413.Web.Controllers
             }
             else
             {
-                ProductDataService.DeleteProduct(id);
-                return RedirectToAction("Index");
+                if (ProductDataService.InUsedProduct(id))
+                {
+                    return Content("Khong the xoa!!");
+                }
+                else
+                {
+                    ProductDataService.DeleteProduct(id);
+                    return RedirectToAction("Index");
+                }
             }
         }
 
