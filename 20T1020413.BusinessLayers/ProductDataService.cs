@@ -7,7 +7,7 @@ using _20T1020413.DataLayers;
 using _20T1020413.DomainModels;
 using System.Configuration;
 
-namespace _20T1020413.BusinessLayer
+namespace _20T1020413.BusinessLayers
 {
     /// <summary>
     /// Các nghiệp vụ quản lý hàng hóa

@@ -1,4 +1,4 @@
-﻿using _20T1020413.BusinessLayer;
+﻿using _20T1020413.BusinessLayers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,7 +102,7 @@ namespace _20T1020413.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Product data, string price, HttpPostedFileBase uploadPhoto)
+        public ActionResult Save(ProductModel data, string price, HttpPostedFileBase uploadPhoto)
         {
             //try
             //{

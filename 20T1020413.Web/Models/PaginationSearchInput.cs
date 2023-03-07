@@ -31,4 +31,11 @@ namespace _20T1020413.Web.Models
         public int SupplierID { get; set; } = 0;
     }
 
+    public class OrderSearchInput : PaginationSearchInput
+    {
+        public int EmployeeID { get; set; } = 0;
+        public int ShipperID { get; set; } = 0;
+        public int Status { get; set; } = 0;
+    }
+
 }
