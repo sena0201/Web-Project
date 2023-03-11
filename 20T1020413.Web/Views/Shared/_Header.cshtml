@@ -40,10 +40,6 @@
                             <div class="pull-left">
                                 <button class="btn btn-default btn-flat js-info">Thông tin</button>
                             </div>
-                            <div class="">
-                                <a href="~/Account/ChangePassword" class="btn btn-default btn-flat">Đổi mật khẩu</a>
-                                @*<button class="btn btn-default btn-flat">Đổi mật khẩu</button>*@
-                            </div>
                             <div class="pull-right">
                                 <a href="~/Account/Logout" class="btn btn-default btn-flat">Đăng xuất</a>
                             </div>
@@ -73,12 +69,6 @@
                 </lable>
             </div>
             <div class="">
-                <label class="info-text">Ngày sinh:</label>
-                <lable class="info-container">
-
-                </lable>
-            </div>
-            <div class="">
                 <label class="info-text">Ảnh:</label>
                 <label class="info-container">
                     <img src="~/Photo/@userAccount.Photo" class="user-image" alt="User Image">
@@ -90,23 +80,11 @@
                     @userAccount.Email
                 </label>
             </div>
-            <div class="">
-                <label class="info-text">Ghi chú:</label>
-                <label class="info-container">
-
-                </label>
-            </div>
         </div>
         <div class="modal-footer">
+            <a href="~/Account/ChangePassword" class="btn btn-success" style="border: none; padding: 5px;">Đổi mật khẩu</a>
             <button class="btn-warning back-btn js-modal-close">Quay lại</button>
         </div>
-    </div>
-</div>
-
-@* change password form *@
-<div class="change-modal js-change-modal">
-    <div class="change-modal-container">
-        
     </div>
 </div>
 
@@ -114,9 +92,6 @@
     const infoBtn = document.querySelector('.js-info')
     const modal = document.querySelector('.js-modal')
     const modalCloses = document.querySelectorAll('.js-modal-close')
-
-    const changeBtn = document.querySelector('.js-change-password')
-    const changeModal = document.querySelector('.js-change-modal')
 
     function ShowInformation() {
         modal.classList.add('open')
@@ -126,13 +101,7 @@
         modal.classList.remove('open')
     }
 
-    function ShowChangePassword() {
-        changeModal.classList.add('open')
-    }
-
     infoBtn.addEventListener('click', ShowInformation)
-
-    changeBtn.addEventListener('click', ShowChangePassword)
 
     for (const modalClose of modalCloses) {
         modalClose.addEventListener('click', CloseShow)

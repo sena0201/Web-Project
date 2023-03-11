@@ -37,7 +37,7 @@ namespace _20T1020413.DataLayers.SQLServer
                     {
                         data = new UserAccount()
                         {
-                            UserId = Convert.ToString(dbReader["EmployeeID"]),
+                            UserId = Convert.ToInt32(dbReader["EmployeeID"]),
                             UserName = Convert.ToString(dbReader["Email"]),
                             FullName = $"{ dbReader["FirstName"]} { dbReader["LastName"]}",
                             Email = Convert.ToString(dbReader["Email"]),
@@ -59,7 +59,7 @@ namespace _20T1020413.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"UPDATE Employees SET Password = @NemPassword WHERE Email=@Email AND Password=@OldPassword";
+                cmd.CommandText = @"UPDATE Employees SET Password = @NewPassword WHERE Email=@Email AND Password=@OldPassword";
                 cmd.Parameters.AddWithValue("@Email", userName);
                 cmd.Parameters.AddWithValue("@NewPassword", newPassword);
                 cmd.Parameters.AddWithValue("@OldPassword", oldPassword);

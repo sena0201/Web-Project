@@ -7,7 +7,7 @@ using System.Web.Security;
 using _20T1020413.BusinessLayers;
 using _20T1020413.DomainModels;
 
-namespace _20T1020411.Web.Controllers
+namespace _20T1020413.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -21,6 +21,9 @@ namespace _20T1020411.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            var cookie = Converter.CookieToUserAccount(User.Identity.Name);
+            if (cookie != null)
+                return RedirectToAction("Index", "Home");
             return View();
         }
         [ValidateAntiForgeryToken]
@@ -57,61 +60,30 @@ namespace _20T1020411.Web.Controllers
             return RedirectToAction("Login");
         }
 
-        [HttpPost]
-        public ActionResult ChangePassword(string userName = "" , string oldPassword = "", string newPassword = "")
+        public ActionResult ChangePassword()
         {
-            ViewBag.UerName = userName;
-            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string userName = "", string oldPassword = "", string newPassword = "")
+        {
+            ViewBag.UserName = userName;
+            if (string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
             {
                 ModelState.AddModelError("", "Vui lòng nhập đủ thông tin");
                 return View();
+
             }
             var check = UserAccountService.ChangePassword(AccountTypes.Employee, userName, oldPassword, newPassword);
             if (check == false)
             {
-                ModelState.AddModelError("", "Thông tin không chính xác");
+                ModelState.AddModelError("", "Mật khẩu cũ không đúng");
                 return View();
             }
-            Response.Write("<script>alert('Đổi mật khẩu thành công! Quay trở lại đăng nhập')</script>");
-            Session.Clear();
-            FormsAuthentication.SignOut();
+            Response.Write("<script>function Msg(){return alert('Đổi mật khẩu thành công! Vui lòng đăng nhập lại!')}</script>");
             return View("Login");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SavePassword(string userName = "", string oldPassword = "", string newPassword = "")
-        {
-            try
-            {
-                //Kiểm soát đầu vào
-                if (string.IsNullOrWhiteSpace(userName))
-                    ModelState.AddModelError("", "Tên đăng nhập không được để trống");
-
-                if (string.IsNullOrWhiteSpace(oldPassword))
-                    ModelState.AddModelError("", "Vui lòng nhập mật khẩu cũ");
-
-                if (string.IsNullOrWhiteSpace(newPassword))
-                    ModelState.AddModelError("", "Vui lòng nhập mật khẩu mới");
-                //...
-
-                var userAccount = UserAccountService.Authorize(AccountTypes.Employee, userName, oldPassword);
-                if (userAccount == null)
-                {
-                    ModelState.AddModelError("", "Thông tin không chính xác");
-                    return View();
-                }
-                else
-                {
-                    UserAccountService.ChangePassword(AccountTypes.Employee, userName, oldPassword, newPassword);
-                }
-                return RedirectToAction("Index","Home");
-            }
-            catch
-            {
-                //Ghi lại log lỗi
-                return Content("Có lỗi xảy ra. Vui lòng thử lại!!");
-            }
-        }
     }
 }

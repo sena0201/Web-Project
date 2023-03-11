@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Codes\ApiResult.cs" />
     <Compile Include="Codes\Converter.cs" />
     <Compile Include="Codes\SelectListHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -6895,7 +6896,6 @@
     <Content Include="Themes\dist\css\themify-icons\fonts\themify.ttf" />
     <Content Include="Themes\dist\css\themify-icons\fonts\themify.woff" />
     <Content Include="Themes\dist\css\themify-icons\Themify IconFonts 5-23-2014.json" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Product\Attribute.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
@@ -6906,8 +6906,9 @@
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Order\EditDetail.cshtml" />
     <Content Include="Views\Order\SearchProducts.cshtml" />
-    <Content Include="Views\Order\Shipping.cshtml" />
+    <Content Include="Views\Order\SelectShipper.cshtml" />
     <Content Include="Views\Order\Search.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

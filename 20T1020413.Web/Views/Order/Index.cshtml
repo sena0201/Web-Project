@@ -1,14 +1,30 @@
 ﻿@model _20T1020413.Web.Models.OrderSearchInput
 @{
     ViewBag.Title = "Tra cứu đơn hàng";
+    string successMessage = ViewBag.SuccessMessage.ToString();
+    string errorMessage = ViewBag.ErrorMessage.ToString();
 }
 
 <div class="box box-primary">
     <div class="box-body">
+        @if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Lỗi!</strong> @errorMessage
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(successMessage))
+        {
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @successMessage
+            </div>
+        }
         <!--Form đầu vào tìm kiếm-->
         <form id="formSearch" action="~/Order/Search">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-2" style="width: 15%;">
                     <select class="form-control" name="Status">
                         <option value="0">-- Trạng thái --</option>
                         <option value="1">Đơn hàng mới (chờ duyệt)</option>

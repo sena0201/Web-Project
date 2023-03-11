@@ -85,7 +85,7 @@ namespace _20T1020413.Web.Controllers
                 return RedirectToAction("Index");
             var product = ProductDataService.GetProduct(id);
             var data = new ProductModel()
-            {   
+            {
                 ProductID = product.ProductID,
                 ProductName = product.ProductName,
                 CategoryID = product.CategoryID,
@@ -136,10 +136,26 @@ namespace _20T1020413.Web.Controllers
                 uploadPhoto.SaveAs(filePath);
                 data.Photo = fileName;
             }
+
+            var model = new ProductModel()
+            {
+                ProductID = data.ProductID,
+                ProductName = data.ProductName,
+                CategoryID = data.CategoryID,
+                SupplierID = data.SupplierID,
+                Unit = data.Unit,
+                Price = data.Price,
+                Photo = data.Photo,
+                Attributes = ProductDataService.ListAttributes(data.ProductID),
+                Photos = ProductDataService.ListPhotos(data.ProductID)
+            };
+
             if (!ModelState.IsValid)
             {
                 if (data.ProductID == 0)
                     return View("Create", data);
+                else
+                    return View("Edit", model);
             }
 
             if (data.ProductID == 0)
@@ -208,12 +224,12 @@ namespace _20T1020413.Web.Controllers
                     ViewBag.Title = "Bổ sung ảnh";
                     return View(data);
                 case "edit":
-                    if (photoID <= 0)
-                        return RedirectToAction("Index");
+                    if (photoID <= 0 || productID <= 0)
+                        return RedirectToAction($"Edit/{productID}");
 
                     data = ProductDataService.GetPhoto(photoID);
                     if (data == null)
-                        return RedirectToAction("Index");
+                        return RedirectToAction($"Edit/{productID}");
                     ViewBag.Title = "Thay đổi ảnh";
                     return View(data);
                 case "delete":
@@ -239,10 +255,12 @@ namespace _20T1020413.Web.Controllers
                 uploadPhoto.SaveAs(filePath);
                 data.Photo = fileName;
             }
+            if(string.IsNullOrWhiteSpace(data.Photo))
+                ModelState.AddModelError("Photo", "Vui lòng chọn ảnh");
             if (string.IsNullOrWhiteSpace(data.Description))
                 ModelState.AddModelError("Description", "Giá trị thuộc tính không được để trống");
             if (data.DisplayOrder == 0)
-                ModelState.AddModelError("DisplayOrder", "không được để trống");
+                ModelState.AddModelError("DisplayOrder", "Vui lòng nhập thú tự hiển thị");
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = data.PhotoID == 0 ? "Bổ sung ảnh" : "Cập nhật ảnh";
@@ -280,7 +298,8 @@ namespace _20T1020413.Web.Controllers
                     var data = new ProductAttribute()
                     {
                         AttributeID = 0
-                        ,ProductID = productID
+                        ,
+                        ProductID = productID
                     };
                     ViewBag.Title = "Bổ sung thuộc tính";
                     return View(data);

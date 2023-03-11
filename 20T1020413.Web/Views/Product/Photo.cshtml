@@ -25,6 +25,7 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
                     <img src="~/Photo/@Model.Photo" id="photo" class="img img-bordered" style="width:150px" />
+                    @Html.ValidationMessageFor(m => m.Photo, "", new { @style = "color:#f00;" })
                 </div>
             </div>
 
@@ -32,6 +33,7 @@
                 <label class="control-label col-sm-2">Mô tả:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="Description" value="@Model.Description" autofocus>
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @style = "color:#f00;" })
                 </div>
             </div>
 
@@ -39,6 +41,7 @@
                 <label class="control-label col-sm-2">Thứ tự hiển thị:</label>
                 <div class="col-sm-10">
                     <input type="number" class="form-control" name="DisplayOrder" value="@Model.DisplayOrder" autofocus>
+                    @Html.ValidationMessageFor(m => m.DisplayOrder, "", new { @style = "color:#f00;" })
                 </div>
             </div>
 

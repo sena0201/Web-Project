@@ -9,6 +9,5 @@ namespace _20T1020413.Web.Models
     public class OrderModel : Order
     {
         public List<OrderDetail> DataDetails { get; set; }
-
     }
 }

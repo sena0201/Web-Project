@@ -14,7 +14,7 @@ namespace _20T1020413.DomainModels
         /// <summary>
         /// 
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// 
         /// </summary>
