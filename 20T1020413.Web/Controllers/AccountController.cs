@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI;
 using _20T1020413.BusinessLayers;
 using _20T1020413.DomainModels;
 
@@ -71,17 +71,24 @@ namespace _20T1020413.Web.Controllers
             ViewBag.UserName = userName;
             if (string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
             {
-                ModelState.AddModelError("", "Vui lòng nhập đủ thông tin");
+                ModelState.AddModelError("", "Vui lòng nhập đủ thông tin!");
                 return View();
 
             }
             var check = UserAccountService.ChangePassword(AccountTypes.Employee, userName, oldPassword, newPassword);
             if (check == false)
             {
-                ModelState.AddModelError("", "Mật khẩu cũ không đúng");
+                ModelState.AddModelError("", "Thông tin không chính xác!");
                 return View();
             }
-            Response.Write("<script>function Msg(){return alert('Đổi mật khẩu thành công! Vui lòng đăng nhập lại!')}</script>");
+
+            if(newPassword == oldPassword)
+            {
+                ModelState.AddModelError("", "Mật khẩu mới không được trùng với mật khẩu cũ!");
+                return View();
+            }
+
+            Response.Write("<script>alert('Đổi mật khẩu thành công!Vui lòng đăng nhập lại.')</script>");
             return View("Login");
         }
 

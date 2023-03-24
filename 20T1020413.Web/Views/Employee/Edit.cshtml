@@ -28,7 +28,6 @@
                 <label class="control-label col-sm-2">Ngày sinh:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="birthday" value="@string.Format("{0:dd/MM/yyyy}",Model.BirthDate)" />
-                    @*@Html.TextBoxFor(m => m.BirthDate, "{0:dd-MM-yyyy}", new { @class = "form-control" })*@
                     @Html.ValidationMessageFor(m => m.BirthDate, "", new { @style = "color:#f00;" })
                     @Html.HiddenFor(m => m.BirthDate)
                 </div>
@@ -36,16 +35,13 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Ảnh:</label>
                 <div class="col-sm-10">
-                    @*<a class="btn  btn-default" data-wysihtml5-command="insertImage" title="Insert image" tabindex="-1" href="javascript:;" unselectable="on">
-                    <span class="glyphicon glyphicon-picture"></span>
-                </a>*@
                     <div style="margin-bottom: 10px;width: 150px;border: 1px solid #ccc;">
                         <img src="~/Photo/@Model.Photo" id="photo" alt="Photo" style="width:150px;">
                     </div>
-                    @Html.HiddenFor(m=>m.Photo)
-                    <input type="file"  
+                    <input type="hidden" name="photo" value="@Model.Photo" />
+                    <input type="file"
                            name="uploadPhoto"
-                           onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])"/>
+                           onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" />
                 </div>
             </div>
             <div class="form-group">
@@ -59,7 +55,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Ghi chú:</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Notes, new { @class = "form-control" })
+                    @Html.TextAreaFor(m => m.Notes, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Notes, "", new { @style = "color:#f00;" })
                 </div>
             </div>

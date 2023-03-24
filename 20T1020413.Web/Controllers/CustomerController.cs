@@ -145,8 +145,6 @@ namespace _20T1020413.Web.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            if (id == 0) return RedirectToAction("Index");
-
             var data = CommonDataService.GetCustomer(id);
 
             if (data == null) return RedirectToAction("Index");
@@ -160,12 +158,11 @@ namespace _20T1020413.Web.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            if (id == 0) return RedirectToAction("Index");
+            if (CommonDataService.GetCustomer(id) == null) return RedirectToAction("Index");
 
             if (Request.HttpMethod == "GET")
             {
                 var data = CommonDataService.GetCustomer(id);
-                if (data == null) return RedirectToAction("Index");
                 return View(data);
             }
             else
